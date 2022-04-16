@@ -1,23 +1,38 @@
+const API_KEY = 'YOUR API KEY HERE';
 const API_URL = 'https://api.openweathermap.org/';
 const search_form = document.getElementById('search_form');
 
-function getCityCoordinates(city) {
+var city = { }
 
-    let requestURL = API_URL + 'geo/1.0/direct?q=' + city + '&limit=5&appid=' + API_KEY;
+function getCityCoordinates(searchCityText) {
+
+    let requestURL = API_URL + 'geo/1.0/direct?q=' + searchCityText + '&limit=5&appid=' + API_KEY;
     fetch(requestURL).then(function (response){
         return response.json();
     }).then(function (data) {
-        console.log(data[0].name);
-        console.log(data[0].lat);
-        console.log(data[0].lon);
+        city.name = data[0].name;
+        city.latitude = data[0].lat;
+        city.longitude = data[0].lon;
+        getCityWeather();
     });
 }
+
+function getCityWeather() {
+
+    let requestURL = API_URL + 'data/2.5/weather?lat=' + city.latitude + '&lon=' + city.longitude + '&appid=' + API_KEY;
+    fetch(requestURL).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+    });
+}
+
 
 function submitHandler(event) {
 
     event.preventDefault();
-    let city = document.getElementById('search_city').value;
-    getCityCoordinates(city);
+    let searchCityText = document.getElementById('search_city').value;
+    getCityCoordinates(searchCityText);
 }
 
 search_form.addEventListener('submit', submitHandler);
