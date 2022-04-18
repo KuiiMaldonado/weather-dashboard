@@ -1,8 +1,8 @@
-const API_KEY = 'YOUR API KEY HERE';
+const API_KEY = '865284dc0e4d44eddd23a2592bd48d0a';
 const API_URL = 'https://api.openweathermap.org/';
 const search_form = document.getElementById('search_form');
 
-var city = { }
+var city = { };
 
 function getCityCoordinates(searchCityText) {
 
@@ -19,7 +19,33 @@ function getCityCoordinates(searchCityText) {
 
 function getCityWeather() {
 
-    let requestURL = API_URL + 'data/2.5/weather?lat=' + city.latitude + '&lon=' + city.longitude + '&appid=' + API_KEY;
+    let requestURL = API_URL + 'data/2.5/weather?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
+    fetch(requestURL).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        city.temp = data.main.temp;
+        city.humidity = data.main.humidity;
+        city.wind = data.wind.speed;
+        getCityUVIndex();
+    });
+}
+
+function getCityUVIndex() {
+
+    let requestURL = API_URL + 'data/2.5/onecall?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' +
+        '&exclude=minutely,hourly,daily,alerts&appid=' + API_KEY;
+    fetch(requestURL).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        city.uvi = data.current.uvi;
+        getCityForecast();
+    });
+}
+
+function getCityForecast() {
+
+    let requestURL = API_URL + 'data/2.5/forecast?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
     fetch(requestURL).then(function (response) {
         return response.json();
     }).then(function (data) {
