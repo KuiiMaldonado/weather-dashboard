@@ -22,23 +22,17 @@ function getCityWeather() {
     fetch(requestURL).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         city.temp = data.current.temp;
         city.humidity = data.current.humidity;
         city.wind = data.current.wind_speed;
         city.uvi = data.current.uvi;
+
+        city.forecast = []
+        for (let i = 1; i < 6; i++) {
+            city.forecast.push(data.daily[i]);
+        }
     });
 }
-
-// function getCityForecast() {
-//
-//     let requestURL = API_URL + 'data/2.5/forecast?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
-//     fetch(requestURL).then(function (response) {
-//         return response.json();
-//     }).then(function (data) {
-//         console.log(data);
-//     });
-// }
 
 
 function submitHandler(event) {
