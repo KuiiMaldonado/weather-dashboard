@@ -9,10 +9,12 @@ function getCityCoordinates(searchCityText) {
     fetch(requestURL).then(function (response){
         return response.json();
     }).then(function (data) {
-        city.name = data[0].name;
-        city.latitude = data[0].lat;
-        city.longitude = data[0].lon;
-        getCityWeather();
+        if(data.length > 0) {
+            city.name = data[0].name;
+            city.latitude = data[0].lat;
+            city.longitude = data[0].lon;
+            getCityWeather();
+        }
     });
 }
 
