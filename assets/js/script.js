@@ -18,37 +18,19 @@ function getCityCoordinates(searchCityText) {
 
 function getCityWeather() {
 
-    let requestURL = API_URL + 'data/2.5/weather?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
+    let requestURL = API_URL + 'data/2.5/onecall?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
     fetch(requestURL).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
-        city.temp = data.main.temp;
-        city.humidity = data.main.humidity;
-        city.wind = data.wind.speed;
-        getCityUVIndex();
-    });
-}
-
-function getCityUVIndex() {
-
-    let requestURL = API_URL + 'data/2.5/onecall?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' +
-        '&exclude=minutely,hourly,daily,alerts&appid=' + API_KEY;
-    fetch(requestURL).then(function (response) {
-        return response.json();
-    }).then(function (data) {
+        city.temp = data.current.temp;
+        city.humidity = data.current.humidity;
+        city.wind = data.current.wind_speed;
         city.uvi = data.current.uvi;
-        getCityForecast();
-    });
-}
 
-function getCityForecast() {
-
-    let requestURL = API_URL + 'data/2.5/forecast?lat=' + city.latitude + '&lon=' + city.longitude + '&units=metric' + '&appid=' + API_KEY;
-    fetch(requestURL).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
+        city.forecast = []
+        for (let i = 1; i < 6; i++) {
+            city.forecast.push(data.daily[i]);
+        }
     });
 }
 
