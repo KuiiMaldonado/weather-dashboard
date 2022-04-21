@@ -80,4 +80,4 @@ function submitHandler(event) {
 }
 
 searchForm.addEventListener('submit', submitHandler);
-renderSearchHistory();
+// renderSearchHistory();

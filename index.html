@@ -15,27 +15,30 @@
             </div>
         </div>
     </div>
-    <main>
-        <section class="searching">
-            <form id="search_form">
-                <label for="search_city"><h3>Search for a city:</h3></label><br>
-                <input type="text" id="search_city" name="search_city"><br>
-                <input type="submit" value="Submit">
-            </form>
-            <hr>
-            <div id="search_history">
+    <div class="container">
+       <div class="row">
+           <div class="col-3">
+               <div class="container">
+                   <div class="row">
+                       <form id="search_form">
+                           <label for="search_city"><h3>Search for a city:</h3></label><br>
+                           <input type="text" id="search_city" name="search_city"><br>
+                           <input type="submit" value="Submit">
+                       </form>
+                   </div>
+                   <hr>
+                   <div class="row">
+                       <button>1</button>
+                   </div>
+               </div>
+           </div>
+           <div class="col-9">
+               <div class="container">
 
-            </div>
-        </section>
-        <section class="results">
-            <div class="city_results">
-
-            </div>
-            <div class="city_forecast">
-                
-            </div>
-        </section>
-    </main>
+               </div>
+           </div>
+       </div>
+    </div>
     <script>
         var API_KEY = '';
     </script>
