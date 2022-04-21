@@ -1,0 +1,9 @@
+/*General styles*/
+* {
+    font-size: 20px;
+}
+
+.banner {
+    background: linear-gradient(to right, #e66465, #9198e5, #38BDEB);
+    height: 6rem;
+}
