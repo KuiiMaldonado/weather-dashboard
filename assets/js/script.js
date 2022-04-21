@@ -10,9 +10,15 @@ function renderSearchHistory() {
 
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
     searchHistory.forEach(function (element) {
+        let row = document.createElement('div');
         let button = document.createElement('button');
+
+        row.classList.add('row');
+        row.classList.add('mb-2');
+        searchHistoryElement.appendChild(row);
+
         button.textContent = element;
-        searchHistoryElement.appendChild(button);
+        row.appendChild(button);
     });
 }
 
@@ -80,4 +86,4 @@ function submitHandler(event) {
 }
 
 searchForm.addEventListener('submit', submitHandler);
-// renderSearchHistory();
+renderSearchHistory();
