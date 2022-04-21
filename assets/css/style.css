@@ -3,7 +3,13 @@
     font-size: 20px;
 }
 
+/*Style for the header*/
 .banner {
     background: linear-gradient(to right, #e66465, #9198e5, #38BDEB);
     height: 6rem;
+}
+
+/*Styles for the search history buttons*/
+.history_button button{
+    background-color: #38BDEB;
 }

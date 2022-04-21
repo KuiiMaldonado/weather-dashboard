@@ -19,6 +19,8 @@ function renderSearchHistory() {
         searchHistoryElement.appendChild(row);
 
         button.textContent = element;
+        button.classList.add('btn');
+        button.classList.add('rounded-2');
         row.appendChild(button);
     });
 }
@@ -29,7 +31,7 @@ function cleanSearchHistory() {
 
     buttons.forEach(function (element) {
         element.remove();
-    })
+    });
     renderSearchHistory();
 }
 
