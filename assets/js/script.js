@@ -15,11 +15,22 @@ function renderSearchHistory() {
 
         row.classList.add('row');
         row.classList.add('mb-2');
+        row.classList.add('history_button');
         searchHistoryElement.appendChild(row);
 
         button.textContent = element;
         row.appendChild(button);
     });
+}
+
+function cleanSearchHistory() {
+
+    let buttons = document.querySelectorAll('.history_button');
+
+    buttons.forEach(function (element) {
+        element.remove();
+    })
+    renderSearchHistory();
 }
 
 function getCityCoordinates(searchCityText) {
@@ -83,6 +94,7 @@ function submitHandler(event) {
     saveSearchHistory(searchCityText)
     getCityCoordinates(searchCityText);
     searchCity.value = ''
+    cleanSearchHistory();
 }
 
 searchForm.addEventListener('submit', submitHandler);
