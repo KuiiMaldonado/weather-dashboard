@@ -1,9 +1,20 @@
 const API_URL = 'https://api.openweathermap.org/';
 const searchForm = document.getElementById('search_form');
 const searchCity = document.getElementById('search_city');
+const searchHistoryElement = document.getElementById('search_history');
 
 var city = { };
 var searchHistory = [];
+
+function renderSearchHistory() {
+
+    searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+    searchHistory.forEach(function (element) {
+        let button = document.createElement('button');
+        button.textContent = element;
+        searchHistoryElement.appendChild(button);
+    });
+}
 
 function getCityCoordinates(searchCityText) {
 
@@ -45,7 +56,6 @@ function saveSearchHistory(cityName) {
     if (savedHistory === null) {
         let searchArray = [];
         searchArray.push(cityName);
-        // console.log(searchArray);
         localStorage.setItem('searchHistory', JSON.stringify(searchArray));
     }
     else {
@@ -70,3 +80,4 @@ function submitHandler(event) {
 }
 
 searchForm.addEventListener('submit', submitHandler);
+renderSearchHistory();
