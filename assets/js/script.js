@@ -49,13 +49,11 @@ function renderActualCity() {
     let day = date.getDate();
     let iconURL = 'http://openweathermap.org/img/w/' + city.icon +'.png'
 
-    header.textContent = city.name + ' (' + day + '/' + month + '/' + year + ')';
+    header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
     temp.textContent = 'Temp: ' + city.temp + ' °C';
     wind.textContent = 'Wind: ' + city.wind + 'Km/h';
     humidity.textContent = 'Humidity: ' + city.humidity + '%'
     uvi.textContent = 'UV Index: ' + city.uvi;
-
-    header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
 
     header.classList.add('results');
     temp.classList.add('results');
