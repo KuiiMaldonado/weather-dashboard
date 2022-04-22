@@ -3,6 +3,7 @@ const searchForm = document.getElementById('search_form');
 const searchCity = document.getElementById('search_city');
 const searchHistoryElement = document.getElementById('search_history');
 const actualCityElement = document.getElementById('actual_city');
+const cityForecastElement = document.getElementById('city_forecast');
 
 var city = { };
 var searchHistory = [];
@@ -80,6 +81,59 @@ function cleanActualCity() {
     renderActualCity();
 }
 
+function renderCityForecast() {
+
+    city.forecast.forEach(function (element) {
+
+        let div = document.createElement('div');
+        let div2 = document.createElement('div');
+        let header = document.createElement('h5');
+        let img = document.createElement('img');
+        let temp = document.createElement('p');
+        let wind = document.createElement('p');
+        let humidity = document.createElement('p');
+
+        let date = new Date(element.dt * 1000);
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let iconURL = 'http://openweathermap.org/img/w/' + element.weather[0].icon +'.png'
+
+        div.classList.add('col-2');
+        div.classList.add('border');
+        div.classList.add('border-dark');
+        div.classList.add('forecast');
+
+        cityForecastElement.appendChild(div);
+        div.appendChild(div2);
+
+        header.textContent = day + '/' + month + '/' + year;
+        temp.textContent = 'Temp: ' + element.temp.day + ' °C';
+        wind.textContent = 'Wind: ' + element.wind_speed + ' Km/h';
+        humidity.textContent = 'Humidity: ' + element.humidity + '%';
+
+        img.setAttribute('src', iconURL);
+
+        div2.appendChild(header);
+        div2.appendChild(img);
+        div2.appendChild(temp);
+        div2.appendChild(wind);
+        div2.appendChild(humidity);
+    });
+
+}
+
+function cleanCityForecast() {
+
+    let forecast = document.querySelectorAll('.forecast');
+
+    forecast.forEach(function (element) {
+        element.remove();
+    });
+
+    renderCityForecast();
+}
+
 function getCityCoordinates(searchCityText) {
 
     let requestURL = API_URL + 'geo/1.0/direct?q=' + searchCityText + '&limit=5&appid=' + API_KEY;
@@ -115,6 +169,7 @@ function getCityWeather() {
         }
 
         cleanActualCity();
+        cleanCityForecast();
     });
 }
 
