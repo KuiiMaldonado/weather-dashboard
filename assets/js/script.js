@@ -43,12 +43,19 @@ function renderActualCity() {
     let wind = document.createElement('p');
     let humidity = document.createElement('p');
     let uvi = document.createElement('p');
+    let date = new Date(city.date * 1000);
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let iconURL = 'http://openweathermap.org/img/w/' + city.icon +'.png'
 
-    header.textContent = city.name;
+    header.textContent = city.name + ' (' + day + '/' + month + '/' + year + ')';
     temp.textContent = 'Temp: ' + city.temp + ' °C';
     wind.textContent = 'Wind: ' + city.wind + 'Km/h';
     humidity.textContent = 'Humidity: ' + city.humidity + '%'
     uvi.textContent = 'UV Index: ' + city.uvi;
+
+    header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
 
     header.classList.add('results');
     temp.classList.add('results');
@@ -96,7 +103,8 @@ function getCityWeather() {
     fetch(requestURL).then(function (response) {
         return response.json();
     }).then(function (data) {
-        // console.log(data);
+        console.log(data);
+        city.date = data.current.dt;
         city.temp = data.current.temp;
         city.humidity = data.current.humidity;
         city.wind = data.current.wind_speed;
