@@ -216,7 +216,9 @@ function saveSearchHistory(cityName) {
         localStorage.setItem('searchHistory', JSON.stringify(searchArray));
     }
     else {
+
         if(savedHistory.length < 8) {
+            checkSearchHistoryDuplicates(savedHistory, cityName);
             savedHistory.unshift(cityName);
         }
         else {
@@ -224,6 +226,17 @@ function saveSearchHistory(cityName) {
             savedHistory.pop();
         }
         localStorage.setItem('searchHistory', JSON.stringify(savedHistory));
+    }
+}
+
+function checkSearchHistoryDuplicates(savedHistory, cityName) {
+
+    let index = savedHistory.indexOf(cityName);
+
+    if (index !== -1) {
+        console.log(savedHistory);
+        savedHistory.splice(index, 1);
+        console.log(savedHistory);
     }
 }
 
