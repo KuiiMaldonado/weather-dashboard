@@ -61,7 +61,13 @@ function renderActualCity() {
         temp.textContent = 'Temp: ' + city.temp + ' °C';
         wind.textContent = 'Wind: ' + city.wind + ' Km/h';
         humidity.textContent = 'Humidity: ' + city.humidity + '%'
-        uvi.textContent = 'UV Index: ' + city.uvi;
+        if (city.uvi <= 2)
+            uvi.innerHTML = 'UV Index: <span id="uv-index" class="low-uv"> '+ city.uvi + '</span>'
+        else if (city.uvi > 2 && city.uvi <= 5)
+            uvi.innerHTML = 'UV Index: <span id="uv-index" class="moderate-uv"> '+ city.uvi + '</span>'
+        else if (city.uvi > 5) {
+            uvi.innerHTML = 'UV Index: <span id="uv-index" class="high-uv"> '+ city.uvi + '</span>'
+        }
     }
     else {
         header.innerHTML = 'No city selected'
