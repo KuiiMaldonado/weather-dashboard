@@ -217,13 +217,14 @@ function saveSearchHistory(cityName) {
     }
     else {
 
+        let isPop = checkSearchHistoryDuplicates(savedHistory,cityName);
         if(savedHistory.length < 8) {
-            checkSearchHistoryDuplicates(savedHistory, cityName);
             savedHistory.unshift(cityName);
         }
         else {
             savedHistory.unshift(cityName);
-            savedHistory.pop();
+            if (!isPop)
+                savedHistory.pop();
         }
         localStorage.setItem('searchHistory', JSON.stringify(savedHistory));
     }
@@ -232,12 +233,11 @@ function saveSearchHistory(cityName) {
 function checkSearchHistoryDuplicates(savedHistory, cityName) {
 
     let index = savedHistory.indexOf(cityName);
-
     if (index !== -1) {
-        console.log(savedHistory);
         savedHistory.splice(index, 1);
-        console.log(savedHistory);
+        return true;
     }
+    return false;
 }
 
 function saveResults() {
