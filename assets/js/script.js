@@ -174,10 +174,15 @@ function getCityCoordinates(searchCityText) {
         return response.json();
     }).then(function (data) {
         if(data.length > 0) {
+            saveSearchHistory(searchCityText);
+            cleanSearchHistory();
             city.name = data[0].name;
             city.latitude = data[0].lat;
             city.longitude = data[0].lon;
             getCityWeather();
+        }
+        else {
+            alert('No city found. Please, try again.');
         }
     });
 }
@@ -250,13 +255,9 @@ function clickHandler(event) {
     if (event.target.id == 'search_form') {
 
         let searchCityText = document.getElementById('search_city').value;
-        console.log(searchCityText);
         if (searchCityText !== '') {
-
-            saveSearchHistory(searchCityText)
             getCityCoordinates(searchCityText);
-            searchCity.value = ''
-            cleanSearchHistory();
+            searchCity.value = '';
         }
         else {
             alert('Search city field can\'t be empty');
