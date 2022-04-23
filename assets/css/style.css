@@ -1,0 +1,20 @@
+/*General styles*/
+* {
+    font-size: 20px;
+}
+
+/*Style for the header*/
+.banner {
+    background: linear-gradient(to right, #e66465, #9198e5, #38BDEB);
+    height: 6rem;
+}
+
+/*Styles for the search history*/
+.history_button button{
+    background-color: #AAA6AD;
+}
+
+.forecast {
+    font-size: 0.2rem;
+    background-color: rgba(56, 189, 235, 0.5);
+}
