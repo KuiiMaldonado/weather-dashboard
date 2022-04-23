@@ -11,9 +11,10 @@
 
 /*Styles for the search history buttons*/
 .history_button button{
-    background-color: #38BDEB;
+    background-color: #AAA6AD;
 }
 
 .forecast {
     font-size: 0.2rem;
+    background-color: rgba(56, 189, 235, 0.5);
 }
