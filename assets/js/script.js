@@ -156,7 +156,6 @@ function getCityWeather() {
     fetch(requestURL).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         city.date = data.current.dt;
         city.temp = data.current.temp;
         city.humidity = data.current.humidity;
@@ -171,6 +170,7 @@ function getCityWeather() {
 
         cleanActualCity();
         cleanCityForecast();
+        saveResults();
     });
 }
 
@@ -193,6 +193,11 @@ function saveSearchHistory(cityName) {
         }
         localStorage.setItem('searchHistory', JSON.stringify(savedHistory));
     }
+}
+
+function saveResults() {
+
+    localStorage.setItem('results', JSON.stringify(city));
 }
 
 function submitHandler(event) {
