@@ -174,10 +174,15 @@ function getCityCoordinates(searchCityText) {
         return response.json();
     }).then(function (data) {
         if(data.length > 0) {
+            saveSearchHistory(searchCityText);
+            cleanSearchHistory();
             city.name = data[0].name;
             city.latitude = data[0].lat;
             city.longitude = data[0].lon;
             getCityWeather();
+        }
+        else {
+            alert('No city found. Please, try again.');
         }
     });
 }
@@ -216,15 +221,28 @@ function saveSearchHistory(cityName) {
         localStorage.setItem('searchHistory', JSON.stringify(searchArray));
     }
     else {
+
+        let isPop = checkSearchHistoryDuplicates(savedHistory,cityName);
         if(savedHistory.length < 8) {
             savedHistory.unshift(cityName);
         }
         else {
             savedHistory.unshift(cityName);
-            savedHistory.pop();
+            if (!isPop)
+                savedHistory.pop();
         }
         localStorage.setItem('searchHistory', JSON.stringify(savedHistory));
     }
+}
+
+function checkSearchHistoryDuplicates(savedHistory, cityName) {
+
+    let index = savedHistory.indexOf(cityName);
+    if (index !== -1) {
+        savedHistory.splice(index, 1);
+        return true;
+    }
+    return false;
 }
 
 function saveResults() {
@@ -237,10 +255,13 @@ function clickHandler(event) {
     if (event.target.id == 'search_form') {
 
         let searchCityText = document.getElementById('search_city').value;
-        saveSearchHistory(searchCityText)
-        getCityCoordinates(searchCityText);
-        searchCity.value = ''
-        cleanSearchHistory();
+        if (searchCityText !== '') {
+            getCityCoordinates(searchCityText);
+            searchCity.value = '';
+        }
+        else {
+            alert('Search city field can\'t be empty');
+        }
     }
     else if (event.target.classList.contains('btn')) {
 
