@@ -52,7 +52,7 @@ function renderActualCity() {
 
     header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
     temp.textContent = 'Temp: ' + city.temp + ' °C';
-    wind.textContent = 'Wind: ' + city.wind + 'Km/h';
+    wind.textContent = 'Wind: ' + city.wind + ' Km/h';
     humidity.textContent = 'Humidity: ' + city.humidity + '%'
     uvi.textContent = 'UV Index: ' + city.uvi;
 
@@ -99,10 +99,11 @@ function renderCityForecast() {
         let day = date.getDate();
         let iconURL = 'http://openweathermap.org/img/w/' + element.weather[0].icon +'.png'
 
-        div.classList.add('col-2');
+        div.classList.add('col');
         div.classList.add('border');
         div.classList.add('border-dark');
         div.classList.add('forecast');
+        div.classList.add('ms-1');
 
         cityForecastElement.appendChild(div);
         div.appendChild(div2);

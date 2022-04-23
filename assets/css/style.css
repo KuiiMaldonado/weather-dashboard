@@ -13,3 +13,7 @@
 .history_button button{
     background-color: #38BDEB;
 }
+
+.forecast {
+    font-size: 0.2rem;
+}
