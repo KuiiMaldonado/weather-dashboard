@@ -16,8 +16,11 @@
 
 /*Style for the forecast*/
 .forecast {
-    font-size: 0.2rem;
     background-color: rgba(56, 189, 235, 0.5);
+}
+
+.forecast p {
+    font-size: 0.9rem;
 }
 
 /*Style for the uv index backgroud*/

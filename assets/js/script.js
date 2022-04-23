@@ -1,5 +1,4 @@
 const API_URL = 'https://api.openweathermap.org/';
-const searchForm = document.getElementById('search_form');
 const searchCity = document.getElementById('search_city');
 const searchHistoryElement = document.getElementById('search_history');
 const actualCityElement = document.getElementById('actual_city');
@@ -233,15 +232,21 @@ function saveResults() {
     localStorage.setItem('results', JSON.stringify(city));
 }
 
-function submitHandler(event) {
+function clickHandler(event) {
 
-    event.preventDefault();
-    let searchCityText = document.getElementById('search_city').value;
-    saveSearchHistory(searchCityText)
-    getCityCoordinates(searchCityText);
-    searchCity.value = ''
-    cleanSearchHistory();
+    if (event.target.id == 'search_form') {
+
+        let searchCityText = document.getElementById('search_city').value;
+        saveSearchHistory(searchCityText)
+        getCityCoordinates(searchCityText);
+        searchCity.value = ''
+        cleanSearchHistory();
+    }
+    else if (event.target.classList.contains('btn')) {
+
+        getCityCoordinates(event.target.textContent);
+    }
 }
 
-searchForm.addEventListener('click', submitHandler);
+searchHistoryElement.addEventListener('click', clickHandler);
 initialRender();
