@@ -48,17 +48,28 @@ function renderActualCity() {
     let wind = document.createElement('p');
     let humidity = document.createElement('p');
     let uvi = document.createElement('p');
-    let date = new Date(city.date * 1000);
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let iconURL = 'http://openweathermap.org/img/w/' + city.icon +'.png'
 
-    header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
-    temp.textContent = 'Temp: ' + city.temp + ' °C';
-    wind.textContent = 'Wind: ' + city.wind + ' Km/h';
-    humidity.textContent = 'Humidity: ' + city.humidity + '%'
-    uvi.textContent = 'UV Index: ' + city.uvi;
+    if (city.name !== undefined) {
+
+        let date = new Date(city.date * 1000);
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let iconURL = 'http://openweathermap.org/img/w/' + city.icon +'.png'
+
+        header.innerHTML = city.name + ' (' + day + '/' + month + '/' + year + ') <span><img src="' + iconURL + '" id="icon"></span>'
+        temp.textContent = 'Temp: ' + city.temp + ' °C';
+        wind.textContent = 'Wind: ' + city.wind + ' Km/h';
+        humidity.textContent = 'Humidity: ' + city.humidity + '%'
+        uvi.textContent = 'UV Index: ' + city.uvi;
+    }
+    else {
+        header.innerHTML = 'No city selected'
+        temp.textContent = 'Temp: ---';
+        wind.textContent = 'Wind: ---';
+        humidity.textContent = 'Humidity: ---';
+        uvi.textContent = 'UV Index: ---'
+    }
 
     header.classList.add('results');
     temp.classList.add('results');
@@ -71,7 +82,6 @@ function renderActualCity() {
     actualCityElement.appendChild(wind);
     actualCityElement.appendChild(humidity);
     actualCityElement.appendChild(uvi);
-
 }
 
 function cleanActualCity() {
@@ -87,45 +97,47 @@ function cleanActualCity() {
 
 function renderCityForecast() {
 
-    city.forecast.forEach(function (element) {
+    if (city.name !== undefined) {
 
-        let div = document.createElement('div');
-        let div2 = document.createElement('div');
-        let header = document.createElement('h5');
-        let img = document.createElement('img');
-        let temp = document.createElement('p');
-        let wind = document.createElement('p');
-        let humidity = document.createElement('p');
+        city.forecast.forEach(function (element) {
 
-        let date = new Date(element.dt * 1000);
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let iconURL = 'http://openweathermap.org/img/w/' + element.weather[0].icon +'.png'
+            let div = document.createElement('div');
+            let div2 = document.createElement('div');
+            let header = document.createElement('h5');
+            let img = document.createElement('img');
+            let temp = document.createElement('p');
+            let wind = document.createElement('p');
+            let humidity = document.createElement('p');
 
-        div.classList.add('col');
-        div.classList.add('border');
-        div.classList.add('border-dark');
-        div.classList.add('forecast');
-        div.classList.add('ms-1');
+            let date = new Date(element.dt * 1000);
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            let iconURL = 'http://openweathermap.org/img/w/' + element.weather[0].icon +'.png'
 
-        cityForecastElement.appendChild(div);
-        div.appendChild(div2);
+            div.classList.add('col');
+            div.classList.add('border');
+            div.classList.add('border-dark');
+            div.classList.add('forecast');
+            div.classList.add('ms-1');
 
-        header.textContent = day + '/' + month + '/' + year;
-        temp.textContent = 'Temp: ' + element.temp.day + ' °C';
-        wind.textContent = 'Wind: ' + element.wind_speed + ' Km/h';
-        humidity.textContent = 'Humidity: ' + element.humidity + '%';
+            cityForecastElement.appendChild(div);
+            div.appendChild(div2);
 
-        img.setAttribute('src', iconURL);
+            header.textContent = day + '/' + month + '/' + year;
+            temp.textContent = 'Temp: ' + element.temp.day + ' °C';
+            wind.textContent = 'Wind: ' + element.wind_speed + ' Km/h';
+            humidity.textContent = 'Humidity: ' + element.humidity + '%';
 
-        div2.appendChild(header);
-        div2.appendChild(img);
-        div2.appendChild(temp);
-        div2.appendChild(wind);
-        div2.appendChild(humidity);
-    });
+            img.setAttribute('src', iconURL);
 
+            div2.appendChild(header);
+            div2.appendChild(img);
+            div2.appendChild(temp);
+            div2.appendChild(wind);
+            div2.appendChild(humidity);
+        });
+    }
 }
 
 function cleanCityForecast() {
@@ -136,6 +148,17 @@ function cleanCityForecast() {
         element.remove();
     });
 
+    renderCityForecast();
+}
+
+function initialRender() {
+
+    renderSearchHistory();
+    city = JSON.parse(localStorage.getItem('results'));
+    if (city === null)
+        city = {};
+
+    renderActualCity();
     renderCityForecast();
 }
 
@@ -172,9 +195,9 @@ function getCityWeather() {
             city.forecast.push(data.daily[i]);
         }
 
+        saveResults();
         cleanActualCity();
         cleanCityForecast();
-        saveResults();
     });
 }
 
@@ -215,5 +238,4 @@ function submitHandler(event) {
 }
 
 searchForm.addEventListener('click', submitHandler);
-renderSearchHistory();
-// renderCityForecast();
+initialRender();
