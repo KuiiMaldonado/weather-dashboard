@@ -205,5 +205,5 @@ function submitHandler(event) {
     cleanSearchHistory();
 }
 
-searchForm.addEventListener('submit', submitHandler);
+searchForm.addEventListener('click', submitHandler);
 renderSearchHistory();
