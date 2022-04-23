@@ -11,20 +11,24 @@ var searchHistory = [];
 function renderSearchHistory() {
 
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
-    searchHistory.forEach(function (element) {
-        let row = document.createElement('div');
-        let button = document.createElement('button');
 
-        row.classList.add('row');
-        row.classList.add('mb-2');
-        row.classList.add('history_button');
-        searchHistoryElement.appendChild(row);
+    if (searchHistory !== null) {
 
-        button.textContent = element;
-        button.classList.add('btn');
-        button.classList.add('rounded-2');
-        row.appendChild(button);
-    });
+        searchHistory.forEach(function (element) {
+            let row = document.createElement('div');
+            let button = document.createElement('button');
+
+            row.classList.add('row');
+            row.classList.add('mb-2');
+            row.classList.add('history_button');
+            searchHistoryElement.appendChild(row);
+
+            button.textContent = element;
+            button.classList.add('btn');
+            button.classList.add('rounded-2');
+            row.appendChild(button);
+        });
+    }
 }
 
 function cleanSearchHistory() {
@@ -185,7 +189,7 @@ function saveSearchHistory(cityName) {
     }
     else {
         if(savedHistory.length < 8) {
-            savedHistory.push(cityName);
+            savedHistory.unshift(cityName);
         }
         else {
             savedHistory.unshift(cityName);
@@ -212,3 +216,4 @@ function submitHandler(event) {
 
 searchForm.addEventListener('click', submitHandler);
 renderSearchHistory();
+// renderCityForecast();
