@@ -250,10 +250,17 @@ function clickHandler(event) {
     if (event.target.id == 'search_form') {
 
         let searchCityText = document.getElementById('search_city').value;
-        saveSearchHistory(searchCityText)
-        getCityCoordinates(searchCityText);
-        searchCity.value = ''
-        cleanSearchHistory();
+        console.log(searchCityText);
+        if (searchCityText !== '') {
+
+            saveSearchHistory(searchCityText)
+            getCityCoordinates(searchCityText);
+            searchCity.value = ''
+            cleanSearchHistory();
+        }
+        else {
+            alert('Search city field can\'t be empty');
+        }
     }
     else if (event.target.classList.contains('btn')) {
 
